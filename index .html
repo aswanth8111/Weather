@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/648/648198.png?ga=GA1.1.2056408070.1691060330&semt=ais">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Kalam&family=Merienda&family=Nosifer&family=Oxygen&family=Permanent+Marker&family=Roboto:wght@100&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body class="back">
+
+    
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="container">
+                <div class="find">
+                    <input id="value1" class="tex" type="text" placeholder="Enter city name">
+                    <button class="bg-transparent border-0" onclick="search()"><img src="./images/icons8-search-48.png" alt=""></button>
+                </div>
+                <div id="result">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+
+
+
+    </div>
+
+</body>
+<script>
+
+    const search = async () => {
+        let cityName = value1.value
+        console.log(cityName);
+
+        if (cityName) {
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=78de799ee4a9e21704c76ec50618d8d6&units=metric`)
+            response.json().then(data => {
+                console.log(data);
+                /* const weatherIcon = document.querySelector("weatherr") */
+
+                let city = data.name
+                let country = data.sys.country
+                let currTemp = data.main.temp
+                let flTemp = data.main.feels_like
+                let wDesc = data.weather[0].main
+
+                let humidity = data.main.humidity
+                let pressure = data.main.pressure
+                let windSpd = data.wind.speed
+                let windDir = data.wind.deg
+
+
+                /* if (data.weather[0].main == "Clouds") {
+                    weatherIcon.src = "./images/3222797.png";
+                }
+                else if (data.weather[0].main == "Clear") {
+                    weatherIcon.src = "./images/clear.png";
+                }
+                else if (data.weather[0].main == "Rain") {
+                    weatherIcon.src = "./images/rain.png";
+                }
+ */
+
+
+
+
+
+
+                result.innerHTML = `
+			
+			
+       <!-- row1 -->
+       <div class="col-12 fs-5 text-center">
+        <span>${city}</span>,<span>${country}</span>
+      </div>
+      
+        <img src="./images/3222797.png" id="wIcon" class="imgg w-50">
+        
+    
+      <!-- row 2 -->
+      <div class="col-12 text-center" style="font-size: 3rem">${currTemp} °C</div>
+      <!-- row 3 -->
+      <div class="col-12 fs-6 text-center">
+        Feels Like.<span>${wDesc}</span>
+      </div>
+      <div class="row text-center">
+        <div class="col-6 fs-6">Humidity <img class="im2" src="./images/icons8-humidity-48.png"> :<span>${humidity}</span></div>
+		<div class="col-6 fs-6">Pressure <img class="im2" src="./images/pressure_8691439.png"> :<span>${pressure}hPa</span></div>
+      </div>
+      <div class="row text-center">
+        <div class="col-6 fs-6">Wind Speed <img class="im2" src="./images/wind_1200411.png"> : <span>${windSpd} m/s</span></div>
+		<div class="col-6 fs-6">Wind Direction <img class="im2" src="./images/wind_2321536.png"> : <span>${windDir} degree</span></div>
+      </div>
+
+    </div>`
+
+
+
+
+                if (data.weather[0].main == "Clouds") {
+                    document.getElementById("wIcon").src="./images/sky.png"
+                }
+                else if (data.weather[0].main == "Clear") {
+                    document.getElementById("wIcon").src="./images/clear-sky.png"
+                }
+                else if (data.weather[0].main == "Rain") {
+                    document.getElementById("wIcon").src="./images/rain-removebg-preview.png"
+                }
+
+
+
+            })
+
+        }
+        else {
+            alert('invalid entry')
+        }
+    }
+</script>
+
+</html>
